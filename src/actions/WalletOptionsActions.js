@@ -112,8 +112,7 @@ export const walletRowOption = (walletId: string, option: string, archived: bool
             autoCorrect: false,
             returnKeyType: 'go',
             initialValue: '',
-            autoFocus: true,
-            secureTextEntry: true
+            autoFocus: true
           }
           const yesButton = {
             title: s.strings.fragment_wallets_get_seed_wallet
@@ -138,7 +137,7 @@ export const walletRowOption = (walletId: string, option: string, archived: bool
             }
           }
 
-          const renameWalletModal = createSecureTextModal({
+          const getSeedModal = createSecureTextModal({
             icon: (
               <FAIcon
                 style={{ position: 'relative', left: 1 }}
@@ -154,7 +153,7 @@ export const walletRowOption = (walletId: string, option: string, archived: bool
             noButton,
             validateInput
           })
-          const resolveValue = await showModal(renameWalletModal)
+          const resolveValue = await showModal(getSeedModal)
           if (resolveValue) {
             const wallet = CORE_SELECTORS.getWallet(state, walletId)
             const seed = wallet.getDisplayPrivateSeed()
