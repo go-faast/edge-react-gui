@@ -12,14 +12,14 @@ type ActionType =
   // | 'CLOSE_GETSEED_WALLET_MODAL'
   // | 'CLOSE_RESYNC_WALLET_MODAL'
   // | 'CLOSE_SPLIT_WALLET_MODAL'
-  // | 'LOCK_WALLET_SEED'
+  | 'LOCK_WALLET_SEED'
   // | 'OPEN_DELETE_WALLET_MODAL'
   // | 'OPEN_GETSEED_WALLET_MODAL'
   // | 'OPEN_RESYNC_WALLET_MODAL'
   // | 'OPEN_SPLIT_WALLET_MODAL'
   // | 'OPEN_VIEWXPUB_WALLET_MODAL'
   // | 'CLOSE_VIEWXPUB_WALLET_MODAL'
-  // | 'UNLOCK_WALLET_SEED'
+  | 'UNLOCK_WALLET_SEED'
   | 'SWAP_FROM_TO_CRYPTO_WALLETS'
   | 'OPEN_WALLET_SELECTOR_MODAL'
   | 'UPDATE_SHIFT_TRANSACTION_FEE'
@@ -257,7 +257,6 @@ type LegacyAction = {
 export type Action =
   | LegacyAction
   | DeleteWalletModalAction
-  | GetSeedModalAction
   | ResyncWalletModalAction
   | SplitWalletModalAction
   | XPubModalAction
