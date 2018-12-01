@@ -84,8 +84,6 @@ test('initialState', () => {
     },
     walletList: {
       deleteWalletModalVisible: false,
-      getSeedWalletModalVisible: false,
-      privateSeedUnlocked: false,
       viewXPubWalletModalVisible: false,
       xPubSyntax: '',
       resyncWalletModalVisible: false,

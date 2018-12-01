@@ -1,7 +1,6 @@
 // @flow
 
 import { type DeleteWalletModalAction } from '../actions/DeleteWalletModalActions.js'
-import { type GetSeedModalAction } from '../actions/GetSeedModalActions.js'
 import { type ResyncWalletModalAction } from '../actions/ResyncWalletModalActions.js'
 import { type SplitWalletModalAction } from '../actions/SplitWalletModalActions.js'
 import { type XPubModalAction } from '../actions/XPubModalActions.js'
