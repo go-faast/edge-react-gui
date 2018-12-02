@@ -1,6 +1,7 @@
 // @flow
 
 import { FormField, InputAndButtonStyle, MaterialInputStyle, Modal, ModalStyle, PrimaryButton, SecondaryButton, TertiaryButton } from 'edge-components'
+import type { EdgeCurrencyWallet } from 'edge-core-js'
 import React, { Component } from 'react'
 import { Clipboard, Text, View } from 'react-native'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
@@ -13,7 +14,8 @@ import { colors as COLORS } from '../../theme/variables/airbitz.js'
 
 // INTERACTIVE_MODAL /////////////////////////////////////////////////////////////////////////////
 type AddressModalProps = {
-  onDone: any => void
+  onDone: any => void,
+  coreWallet: EdgeCurrencyWallet
 }
 
 type AddressModalState = {
@@ -41,7 +43,7 @@ export class AddressModal extends Component<AddressModalProps, AddressModalState
     this._setClipboard(this.props)
   }
 
-  _setClipboard = async (props: Props) => {
+  _setClipboard = async props => {
     const coreWallet = props.coreWallet
 
     try {
@@ -120,8 +122,14 @@ export class AddressModal extends Component<AddressModalProps, AddressModalState
   }
 }
 
-export type AddressModalOpts = {}
+export type AddressModalOpts = {
+  walletId: string,
+  coreWallet: EdgeCurrencyWallet,
+  currencyCode: string
+}
 
+/* eslint-disable */
 export const createAddressModal = (opts: AddressModalOpts) => (props: { +onDone: Function }) => {
   return <AddressModal {...opts} {...props} />
 }
+/* eslint-enable */

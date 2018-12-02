@@ -1,7 +1,7 @@
 // @flow
 
 import { showModal } from 'edge-components'
-import type { EdgeParsedUri } from 'edge-core-js'
+import type { EdgeCurrencyWallet, EdgeParsedUri } from 'edge-core-js'
 import { Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 

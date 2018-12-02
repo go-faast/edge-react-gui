@@ -11,7 +11,6 @@ import slowlog from 'react-native-slowlog'
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
-import AddressModal from '../../connectors/AddressModalConnector'
 import LegacyAddressModal from '../../connectors/LegacyAddressModalConnector.js'
 import PrivateKeyModal from '../../connectors/PrivateKeyModalConnector.js'
 import * as Constants from '../../constants/indexConstants'
@@ -56,7 +55,7 @@ export class Scan extends Component<Props> {
   }
 
   render () {
-    const { addressModalDoneButtonPressed, legacyAddressModalContinueButtonPressed, legacyAddressModalCancelButtonPressed, onSelectWallet } = this.props
+    const { legacyAddressModalContinueButtonPressed, legacyAddressModalCancelButtonPressed, onSelectWallet } = this.props
 
     return (
       <SafeAreaView>
