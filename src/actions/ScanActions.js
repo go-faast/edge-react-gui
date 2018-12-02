@@ -1,13 +1,17 @@
 // @flow
 
+import { showModal } from 'edge-components'
 import type { EdgeParsedUri } from 'edge-core-js'
 import { Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
+import { createAddressModal } from '../components/modals/AddressModal.js'
 import { ADD_TOKEN, EDGE_LOGIN, SEND_CONFIRMATION } from '../constants/indexConstants.js'
 import s from '../locales/strings.js'
+import * as CORE_SELECTORS from '../modules/Core/selectors.js'
 import * as WALLET_API from '../modules/Core/Wallets/api.js'
 import type { Dispatch, GetState } from '../modules/ReduxTypes.js'
+import * as UI_SELECTORS from '../modules/UI/selectors.js'
 import { denominationToDecimalPlaces, isEdgeLogin, noOp } from '../util/utils.js'
 import { loginWithEdge } from './EdgeLoginActions.js'
 import { activated as legacyAddressModalActivated, deactivated as legacyAddressModalDeactivated } from './LegacyAddressModalActions.js'
@@ -18,10 +22,6 @@ export const UPDATE_RECIPIENT_ADDRESS = 'UPDATE_RECIPIENT_ADDRESS'
 
 export const toggleEnableTorch = () => ({
   type: 'TOGGLE_ENABLE_TORCH'
-})
-
-export const toggleAddressModal = () => ({
-  type: 'TOGGLE_ADDRESS_MODAL_VISIBILITY'
 })
 
 export const enableScan = () => ({
@@ -169,4 +169,20 @@ export const isPrivateKeyUri = (parsedUri: EdgeParsedUri): boolean => {
 
 export const isPaymentProtocolUri = (parsedUri: EdgeParsedUri): boolean => {
   return !!parsedUri.paymentProtocolURL && !parsedUri.publicAddress
+}
+
+export const toggleAddressModal = () => async (dispatch: Dispatch, getState: GetState) => {
+  const state = getState()
+  const walletId: string = UI_SELECTORS.getSelectedWalletId(state)
+  const coreWallet: EdgeCurrencyWallet = CORE_SELECTORS.getWallet(state, walletId)
+  const currencyCode: string = UI_SELECTORS.getSelectedCurrencyCode(state)
+  const addressModal = createAddressModal({
+    walletId,
+    coreWallet,
+    currencyCode
+  })
+  const uri = await showModal(addressModal)
+  if (uri) {
+    dispatch(addressModalDoneButtonPressed(uri))
+  }
 }

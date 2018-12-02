@@ -68,8 +68,6 @@ export class Scan extends Component<Props> {
             {this.renderCamera()}
 
             <View style={[styles.overlay]}>
-              <AddressModal onExitButtonFxn={this._onToggleAddressModal} doneButtonPressed={addressModalDoneButtonPressed} />
-
               <View style={[styles.overlayTop]}>
                 <T style={[styles.overlayTopText]}>{HEADER_TEXT}</T>
               </View>
