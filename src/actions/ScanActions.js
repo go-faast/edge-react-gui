@@ -1,7 +1,8 @@
 // @flow
 
-import { showModal } from 'edge-components'
+import { createYesNoModal, showModal } from 'edge-components'
 import type { EdgeCurrencyWallet, EdgeParsedUri } from 'edge-core-js'
+import React from 'react'
 import { Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 
@@ -11,10 +12,10 @@ import s from '../locales/strings.js'
 import * as CORE_SELECTORS from '../modules/Core/selectors.js'
 import * as WALLET_API from '../modules/Core/Wallets/api.js'
 import type { Dispatch, GetState } from '../modules/ReduxTypes.js'
+import { Icon } from '../modules/UI/components/Icon/Icon.ui.js'
 import * as UI_SELECTORS from '../modules/UI/selectors.js'
 import { denominationToDecimalPlaces, isEdgeLogin, noOp } from '../util/utils.js'
 import { loginWithEdge } from './EdgeLoginActions.js'
-import { activated as legacyAddressModalActivated, deactivated as legacyAddressModalDeactivated } from './LegacyAddressModalActions.js'
 import { activated as privateKeyModalActivated } from './PrivateKeyModalActions.js'
 import { paymentProtocolUriReceived, updateParsedURI } from './SendConfirmationActions.js'
 
@@ -86,7 +87,7 @@ export const parseUri = (data: string) => (dispatch: Dispatch, getState: GetStat
 
       if (isLegacyAddressUri(parsedUri)) {
         // LEGACY ADDRESS URI
-        return setTimeout(() => dispatch(legacyAddressModalActivated()), 500)
+        return setTimeout(() => dispatch(showLegacyAddressModal()), 500)
       }
 
       if (isPrivateKeyUri(parsedUri)) {
@@ -118,21 +119,6 @@ export const parseUri = (data: string) => (dispatch: Dispatch, getState: GetStat
   )
 }
 
-export const legacyAddressModalContinueButtonPressed = () => (dispatch: Dispatch, getState: GetState) => {
-  const state = getState()
-  dispatch(legacyAddressModalDeactivated())
-  const parsedUri = state.ui.scenes.scan.parsedUri
-  setImmediate(() => {
-    if (!parsedUri) {
-      dispatch(enableScan())
-      return
-    }
-
-    Actions[SEND_CONFIRMATION]('fromScan')
-    dispatch(updateParsedURI(parsedUri))
-  })
-}
-
 export const qrCodeScanned = (data: string) => (dispatch: Dispatch, getState: GetState) => {
   const state = getState()
   const isScanEnabled = state.ui.scenes.scan.scanEnabled
@@ -144,15 +130,6 @@ export const qrCodeScanned = (data: string) => (dispatch: Dispatch, getState: Ge
 
 export const addressModalDoneButtonPressed = (data: string) => (dispatch: Dispatch, getState: GetState) => {
   dispatch(parseUri(data))
-}
-
-export const addressModalCancelButtonPressed = () => (dispatch: Dispatch, getState: GetState) => {
-  // dispatch(addressModalDeactivated())
-}
-
-export const legacyAddressModalCancelButtonPressed = () => (dispatch: Dispatch) => {
-  dispatch(legacyAddressModalDeactivated())
-  dispatch(enableScan())
 }
 
 export const isTokenUri = (parsedUri: EdgeParsedUri): boolean => {
@@ -184,5 +161,35 @@ export const toggleAddressModal = () => async (dispatch: Dispatch, getState: Get
   const uri = await showModal(addressModal)
   if (uri) {
     dispatch(addressModalDoneButtonPressed(uri))
+  }
+}
+
+export const legacyAddressModalContinueButtonPressed = () => (dispatch: Dispatch, getState: GetState) => {
+  const state = getState()
+  const parsedUri = state.ui.scenes.scan.parsedUri
+  setImmediate(() => {
+    if (!parsedUri) {
+      dispatch(enableScan())
+      return
+    }
+
+    Actions[SEND_CONFIRMATION]('fromScan')
+    dispatch(updateParsedURI(parsedUri))
+  })
+}
+
+export const showLegacyAddressModal = () => async (dispatch: Dispatch, getState: GetState) => {
+  const legacyAddressModal = createYesNoModal({
+    title: s.strings.legacy_address_modal_title,
+    icon: <Icon style={{}} type={'ionIcons'} name={'ios-alert-outline'} size={30} />,
+    message: s.strings.legacy_address_modal_warning,
+    noButtonText: s.strings.legacy_address_modal_cancel,
+    yesButtonText: s.strings.legacy_address_modal_continue
+  })
+  const response = await showModal(legacyAddressModal)
+  if (response) {
+    dispatch(legacyAddressModalContinueButtonPressed())
+  } else {
+    dispatch(enableScan())
   }
 }

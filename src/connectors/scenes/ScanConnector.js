@@ -2,15 +2,7 @@
 
 import { connect } from 'react-redux'
 
-import {
-  addressModalCancelButtonPressed,
-  addressModalDoneButtonPressed,
-  legacyAddressModalCancelButtonPressed,
-  legacyAddressModalContinueButtonPressed,
-  qrCodeScanned,
-  toggleAddressModal,
-  toggleEnableTorch
-} from '../../actions/ScanActions'
+import { addressModalDoneButtonPressed, qrCodeScanned, toggleAddressModal, toggleEnableTorch } from '../../actions/ScanActions'
 import { selectWalletFromModal } from '../../actions/WalletActions.js'
 import Scan from '../../components/scenes/ScanScene'
 import { getCameraPermission } from '../../modules/permissions/PermissionsSelectors'
@@ -27,10 +19,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   qrCodeScanned: data => dispatch(qrCodeScanned(data)),
   toggleEnableTorch: () => dispatch(toggleEnableTorch()),
   toggleAddressModal: () => dispatch(toggleAddressModal()),
-  legacyAddressModalContinueButtonPressed: () => dispatch(legacyAddressModalContinueButtonPressed()),
-  legacyAddressModalCancelButtonPressed: () => dispatch(legacyAddressModalCancelButtonPressed()),
   addressModalDoneButtonPressed: data => dispatch(addressModalDoneButtonPressed(data)),
-  addressModalCancelButtonPressed: () => dispatch(addressModalCancelButtonPressed()),
   onSelectWallet: (walletId: string, currencyCode: string) => dispatch(selectWalletFromModal(walletId, currencyCode))
 })
 

@@ -20,8 +20,6 @@ describe('Scan component', () => {
       toggleAddressModal: jest.fn(),
       toggleScanToWalletListModal: jest.fn(),
       addressModalDoneButtonPressed: jest.fn(),
-      legacyAddressModalContinueButtonPressed: jest.fn(),
-      legacyAddressModalCancelButtonPressed: jest.fn(),
       onSelectWallet: jest.fn()
     }
     const actual = renderer.render(<Scan {...props} />)
@@ -41,8 +39,6 @@ describe('Scan component', () => {
       toggleAddressModal: jest.fn(),
       toggleScanToWalletListModal: jest.fn(),
       addressModalDoneButtonPressed: jest.fn(),
-      legacyAddressModalContinueButtonPressed: jest.fn(),
-      legacyAddressModalCancelButtonPressed: jest.fn(),
       onSelectWallet: jest.fn()
     }
     const actual = renderer.render(<Scan {...props} />)

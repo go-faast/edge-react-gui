@@ -45,9 +45,6 @@ test('initialState', () => {
     scan: {
       scanEnabled: false,
       torchEnabled: false,
-      legacyAddressModal: {
-        isActive: false
-      },
       privateKeyModal: {
         error: null,
         isSweeping: false,
