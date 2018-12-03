@@ -48,9 +48,6 @@ test('initialState', () => {
       privateKeyModal: {
         error: null,
         isSweeping: false,
-        primaryModal: {
-          isActive: false
-        },
         secondaryModal: {
           isActive: false
         }
