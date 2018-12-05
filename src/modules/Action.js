@@ -248,6 +248,7 @@ type ActionType =
   | 'ON_KYC_TOKEN_SET'
   | 'WIPE_KYC_NEED'
   | 'NEED_KYC'
+  | 'NEED_KYC_SETTING'
   | 'NEED_FINISH_KYC_OFF'
 // | 'SELECT_TO_WALLET_CRYPTO_EXCHANGE'
 // | string
