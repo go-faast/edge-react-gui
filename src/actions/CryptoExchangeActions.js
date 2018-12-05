@@ -31,7 +31,8 @@ export type SetNativeAmountInfo = {
 
 const pluginToName = {
   shapeshift: 'ShapeShift',
-  changelly: 'Changelly'
+  changelly: 'Changelly',
+  faast: 'Faa.st'
 }
 
 function setFromWalletMax (amount: string) {
@@ -168,6 +169,10 @@ export const shiftCryptoCurrency = () => async (dispatch: Dispatch, getState: Ge
           case 'changelly':
             name = 'Changelly'
             supportEmail = 'support@changelly.com'
+            break
+          case 'faast':
+            name = 'Faa.st'
+            supportEmail = 'support@faa.st'
             break
         }
       }
